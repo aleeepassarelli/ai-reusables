@@ -1,0 +1,13 @@
+meta:
+  id: data_units.v1
+  author: "Mia Framework Lab"
+  version: 1.0
+  description: "Coleção de átomos de dados reutilizáveis para IA modular."
+  files:
+    - context_medical.jsonl
+    - glossary_ai_terms.md
+    - sample_fewshot_sentiment.jsonl
+  usage:
+    - "RAGs e agentes de domínio específico."
+    - "Prompts few-shot e few-example."
+    - "Avaliação de consistência semântica."
