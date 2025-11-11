@@ -1,0 +1,50 @@
+# ⚛️ Atomic Prompt Unit — Reasoning Chain
+# ------------------------------------------------------
+# Define o esqueleto de raciocínio usado pelo modelo
+# (Skeleton of Thought ou Chain of Thought abstrata).
+# ------------------------------------------------------
+
+meta:
+  id: reasoning.chain.v1
+  type: reasoning
+  author: "Mia Framework Lab"
+  version: 1.0
+  tags: ["cogitation", "structured-thinking", "prompt-logic"]
+
+reasoning_framework:
+  structure:
+    - stage: "Análise Inicial"
+      objective: "Interpretar o problema e identificar variáveis principais."
+      instruction: "Liste elementos-chave e relacione com conhecimento prévio."
+    - stage: "Planejamento"
+      objective: "Organizar o raciocínio em passos lógicos e verificáveis."
+      instruction: "Proponha uma sequência de ações lógicas (1→2→3)."
+    - stage: "Execução"
+      objective: "Aplicar as etapas definidas para gerar a resposta."
+      instruction: "Descreva o raciocínio e fundamente cada decisão."
+    - stage: "Verificação"
+      objective: "Checar coerência e consistência da resposta final."
+      instruction: "Revise o resultado e ajuste inconsistências conceituais."
+
+patterns:
+  - name: "SoT_Generic"
+    template: |
+      [Etapa 1: Análise Inicial]
+      {análise}
+
+      [Etapa 2: Planejamento]
+      {plano}
+
+      [Etapa 3: Execução]
+      {execução}
+
+      [Etapa 4: Verificação]
+      {checagem}
+
+example_usage:
+  question: "Como criar um classificador de sentimentos eficiente?"
+  reasoning: |
+    1. Analisar o domínio: tipos de sentimentos, contexto e idioma.
+    2. Planejar pipeline: coleta, limpeza, tokenização, modelo.
+    3. Executar: aplicar embeddings e treinamento supervisionado.
+    4. Verificar: medir precisão, F1 e robustez.
