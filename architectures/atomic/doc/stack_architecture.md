@@ -168,3 +168,27 @@ garantindo confiabilidade e auditoria educacional ou empresarial.
 
 ## 📦 Estrutura Recomendada de Diretórios
 
+atomic_architecture/
+├── 1_atoms_data/
+│ ├── graphiti_neo4j/
+│ ├── pieces_app/
+│ └── api_mcp/
+├── 2_molecules_action/
+│ ├── semantic_chain.yaml
+│ ├── sle_engine.py
+│ └── pipeline_skeleton.md
+├── 3_organisms_agents/
+│ ├── agent_mcp.yaml
+│ ├── agent_vision.yaml
+│ ├── agent_OCR.yaml
+│ └── ...
+├── 4_templates_output/
+│ ├── report_template.md
+│ └── visualization_schemes/
+└── 5_experience_interface/
+├── web_interface/
+├── metrics/
+└── security/
+
+
+---
