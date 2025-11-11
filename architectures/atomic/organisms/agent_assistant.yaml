@@ -1,0 +1,20 @@
+# -----------------------------------------------------------------
+# 🧩 Organismo: agent_assistant.yaml
+# -----------------------------------------------------------------
+agent_id: "agent_assistant"
+name: "Assistente Geral"
+description: "Agente de conversação rápido para tarefas gerais (resumo, Q&A)."
+
+# --- Tipo de Execução ---
+type: "llm_chat"
+
+# --- Configuração do LLM (Ollama) ---
+llm_config:
+  # Cérebro: Mistral 7B Instruct (via Ollama)
+  model: "mistral:7b-instruct" 
+  
+  # Missão (Prompt do Sistema)
+  system_prompt: |
+    Você é um assistente prestativo, rápido e conciso.
+    Sua missão é responder perguntas, resumir textos e
+    ajudar em tarefas gerais de escrita.
