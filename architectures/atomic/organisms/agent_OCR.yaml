@@ -1,0 +1,16 @@
+# -----------------------------------------------------------------
+# 🧩 Organismo: agent_OCR.yaml
+# -----------------------------------------------------------------
+agent_id: "agent_OCR"
+name: "Agente OCR (O Documentarista)"
+description: "Converte PDFs e imagens de documentos em Markdown estruturado."
+
+# --- Tipo de Execução ---
+# Este agente usa um script Python dedicado em `tools/`
+type: "local_tool"
+
+# --- Configuração da Ferramenta Local ---
+local_tool_config:
+  # Cérebro: Nano-nets OCR2 3B (via script)
+  # Aponta para a "mão" (ferramenta) que sabe como rodar o Nanonets
+  script_path: "run_ocr.py"
