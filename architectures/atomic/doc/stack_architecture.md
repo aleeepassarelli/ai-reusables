@@ -266,9 +266,9 @@ Ao terminar a sessão:
 deactivate
 Para limpar cache e sessões:
 
-redis-cli flushall
-🪪 Créditos
-Arquitetura e Framework: Aledev
-Licença: CC-BY-SA 4.0
-Compatibilidade: Python 3.11+
-Repositório: [AI REUSABLES](https://github.com/aleeepassarelli/ai-reusables)
+* redis-cli flushall
+* Créditos
+* Arquitetura e Framework: Aledev
+* Licença: CC-BY-SA 4.0
+* Compatibilidade: Python 3.11+
+* Repositório: [AI REUSABLES](https://github.com/aleeepassarelli/ai-reusables)
