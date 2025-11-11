@@ -215,8 +215,8 @@ O resultado é uma infraestrutura que **pensa, aprende e evolui localmente**, de
 ### ⚙️ 1. Clonar o Repositório
 
 ```bash
-git clone https://github.com/seu-usuario/atomic-architecture.git
-cd atomic-architecture
+git clone https://github.com/aleeepassarelli/ai-reusables
+cd ai-reusables
 ```
 📦 2. Criar o Ambiente Virtual
 ```
