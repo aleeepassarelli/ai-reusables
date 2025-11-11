@@ -1,201 +1,137 @@
-# ⚛️ Arquitetura Atômica (Atomic Architecture)
-**Blueprint Fundamental do AI Reusables Framework**
+# 🧩 **Atomic Architecture — Estrutura Modular para Inteligência Distribuída**
+
+**Versão:** 1.0
+**Motor base:** `SLE Engine (Semantic Latent Engineering)`
+**Licença:** MIT
+**Foco:** Aplicações educacionais, pesquisa aplicada, automação leve e sistemas cognitivos locais.
 
 ---
 
-## 🧩 Visão Geral
+## 🎯 Objetivo
 
-A **Arquitetura Atômica** é o **nível mais essencial** do framework — o ponto de origem onde **lógica, design e cognição** se unem em **unidades mínimas reutilizáveis**.
+A **Atomic Architecture** é uma estrutura modular para criar e manter **sistemas de inteligência local** — integrando dados, agentes e interfaces sem depender de infraestruturas complexas ou caras.
 
-Inspirada pelo conceito de **Atomic Design** (Brad Frost, 2013), esta abordagem expande o princípio além da interface visual, aplicando-o à **engenharia de IA**, **arquitetura de software** e **estruturação do conhecimento**.
-
-> ⚛️ Cada átomo é um fragmento de inteligência encapsulada.
-> Ele não serve apenas para ser reutilizado, mas para ser **combinado, evoluído e reconfigurado**.
+O propósito é oferecer às **escolas, pequenos negócios e equipes locais** uma forma de construir suas próprias ferramentas cognitivas, **com autonomia e atualização contínua**.
 
 ---
 
-## 🧠 Conceito Fundamental
+## 🧠 Conceito Base
 
-Na Arquitetura Atômica, **cada unidade de código, dado, prompt ou design é tratada como uma partícula cognitiva autônoma**, com identidade, função e interface própria.
-
-Esses átomos não formam camadas — formam **fatias vivas**, como **células distribuídas**, capazes de cooperar dentro de um organismo digital.
+A arquitetura segue uma lógica inspirada na biologia e na engenharia de software:
 
 ```
-
-Átomo  →  Molécula  →  Organismo  →  Template  →  Experiência (UX)
-
+Átomo → Molécula → Organismo → Template → Experiência
 ```
 
-Cada transição representa uma **emergência de complexidade**, não um acoplamento estrutural.  
-O sistema cresce **para fora**, não **para cima**.
+Cada camada é independente, mas se conecta por interfaces semânticas simples.
+Essa estrutura permite que sistemas cresçam e evoluam **sem perder coerência ou estabilidade**.
 
 ---
 
-## 🧬 Blueprint do Átomo
+## 🧩 Estrutura
 
-Cada átomo segue um blueprint padrão — simples, isolado e interoperável:
-
-```
-
-atomic/
-├── atoms/
-│   ├── logic/               # Funções puras e operadores
-│   │   ├── normalize_text.py
-│   │   └── vector_distance.py
-│   ├── prompt_units/        # Fragmentos de prompt (persona, formato, raciocínio)
-│   │   ├── persona_expert.yaml
-│   │   └── reasoning_chain.yaml
-│   ├── data_units/          # Datasets ou trechos de contexto mínimo
-│   ├── ui_atoms/            # Componentes básicos de interface (opcional)
-│   └── meta.yaml            # Metadados: autor, tipo, entradas, saídas
+```bash
+atomic_architecture/
+├── 1_atoms_data/
+│   ├── graphiti_neo4j/       # Grafos e bases relacionais
+│   ├── pieces_app/           # Fragmentos de conhecimento e notas locais
+│   └── api_mcp/              # Conectores e provedores externos
 │
-└── examples/
-└── use_atomic_logic.py
-
-````
-
-### Exemplo de `meta.yaml`
-```yaml
-name: normalize_text
-type: logic
-input: str
-output: str
-description: Remove acentos, pontuação e padroniza minúsculas.
-dependencies: [unicodedata, re]
-````
-
----
-
-## 🧩 Regras de Design Atômico
-
-| Princípio           | Descrição                                           |
-| ------------------- | --------------------------------------------------- |
-| **Isolamento**      | Cada átomo é autocontido — sem dependência cruzada. |
-| **Composição**      | Deve ser combinável com outros sem acoplamento.     |
-| **Identidade**      | Possui propósito único e metadado declarativo.      |
-| **Escalabilidade**  | Pode ser expandido para moléculas e organismos.     |
-| **Reutilização**    | Pode ser importado em qualquer contexto.            |
-| **Rastreabilidade** | Possui assinatura de origem e histórico.            |
-
----
-
-## 💡 Exemplo Prático
-
-### `atoms/logic/normalize_text.py`
-
-```python
-import unicodedata, re
-
-def normalize_text(text: str) -> str:
-    text = unicodedata.normalize("NFKD", text)
-    text = text.encode("ascii", "ignore").decode("utf-8")
-    text = re.sub(r"[^a-zA-Z0-9\s]", "", text)
-    return text.lower().strip()
-```
-
-### `examples/use_atomic_logic.py`
-
-```python
-from atoms.logic.normalize_text import normalize_text
-
-raw = "Olá, Mundo! ✨"
-clean = normalize_text(raw)
-print(clean)  # -> ola mundo
-```
-
-Cada átomo como esse pode ser:
-
-* Chamado diretamente por um agente,
-* Acoplado em pipelines (como moléculas),
-* Ou versionado como unidade de aprendizado.
-
----
-
-## 🧭 Casos de Uso
-
-| Contexto          | Aplicação                                                      |
-| ----------------- | -------------------------------------------------------------- |
-| **IA Modular**    | Criar operadores cognitivos básicos (embedder, filter, ranker) |
-| **Design System** | Definir elementos primários de UX (botão, label, input)        |
-| **DevOps/MLOps**  | Versionar funções e metadados isoladamente (via DVC)           |
-| **Educação**      | Ensinar princípios de composição e lógica pura                 |
-
----
-
-## 🧩 Prompt Base — “Átomo Cognitivo”
-
-```text
-Você é um Átomo de Inteligência.
-Sua função é executar uma única operação cognitiva com precisão e neutralidade.
-Você não raciocina além da sua função, mas entrega sua saída com contexto semanticamente limpo.
+├── 2_molecules_action/
+│   ├── semantic_chain.yaml   # Cadeias semânticas e fluxos cognitivos
+│   └── pipeline_skeleton.md  # Estruturas base para automação e análise
+│
+├── 3_organisms_agents/
+│   ├── providers_api/        # Conexão com serviços externos
+│   ├── local_agents/         # Agentes autônomos locais
+│   ├── tools/                # Ferramentas operacionais
+│   ├── agent_vision.yaml     # Reconhecimento visual
+│   ├── agent_ocr.yaml        # Leitura de textos e documentos
+│   ├── agent_mcp.yaml        # Controle de contexto
+│   ├── agent_code.yaml       # Geração e análise de código
+│   ├── agent_assistant.yaml  # Assistente textual geral
+│   └── agent_text_struct.yaml# Estruturação semântica
+│
+├── 4_templates_forms/
+│   ├── report_template.md    # Relatórios padronizados
+│   └── agent_template.yaml   # Base para novos agentes
+│
+├── 5_experience_ux/
+│   ├── web_interface/        # Interface web (educação, dashboards)
+│   └── cli_demo/             # Demonstração via linha de comando
+│
+└── core/
+    └── sle_engine.py         # Motor central de coerência semântica
 ```
 
 ---
 
-## 🔗 Integração com o Framework
+## ⚙️ Como Funciona
 
-```
-atomic/       → base mínima (funções, prompts, dados)
-molecular/    → composição de átomos (pipelines, micro-fluxos)
-organismic/   → agentes autônomos (AI services, células)
-template/     → estrutura aplicacional (frontend/backend)
-ux/           → camada viva da experiência (interfaces evolutivas)
-```
-
----
-
-## ⚙️ Requisitos Técnicos
-
-`requirements.txt` (mínimo recomendado):
-
-```
-numpy
-pandas
-pydantic
-pyyaml
-```
-
-Essas dependências garantem interoperabilidade entre lógica, dados e metadados.
+| Etapa              | Camada               | Função Principal                                | Exemplo de Aplicação                                        |
+| ------------------ | -------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
+| **1. Dados**       | `1_atoms_data`       | Captura e organiza dados locais e externos.     | Conectar Google Sheets, planilhas ou sensores locais.       |
+| **2. Ação**        | `2_molecules_action` | Estrutura fluxos de automação e raciocínio.     | Análise de conteúdo, relatórios automáticos, curadoria.     |
+| **3. Cognição**    | `3_organisms_agents` | Executa tarefas cognitivas por meio de agentes. | Agente de leitura, análise de código, OCR, recomendação.    |
+| **4. Template**    | `4_templates_forms`  | Facilita replicação e padronização.             | Criar novos relatórios, rotinas ou agentes sem programação. |
+| **5. Experiência** | `5_experience_ux`    | Interface com o usuário.                        | Painel educacional, chatbot, CLI interativo.                |
+| **Core**           | `core/`              | Mantém coerência semântica entre módulos.       | Processamento de embeddings, análise de contexto, logs.     |
 
 ---
 
-## 🧭 Visão Filosófica
+## 🧩 Casos de Uso
 
-> “O átomo é o menor pedaço de razão reutilizável.”
+1. **Educação Técnica Local**
 
-Ele não é um componente fixo, mas um **estado de equilíbrio entre simplicidade e função**.
-A inteligência emerge não da sua forma, mas da **sintaxe de suas combinações**.
+   * Conectar conteúdos, alunos e professores em um ambiente adaptável.
+   * Automatizar relatórios, avaliações e feedback.
 
----
+2. **Pequenas Empresas**
 
-## 🧠 Síntese Visual
+   * Criar um "centro cognitivo" local com análise de dados, geração de relatórios e insights em tempo real.
+   * Substituir tarefas repetitivas e caras por automações modulares.
 
-```mermaid
-graph TD
-    A[⚛️ Átomo] --> B[🧪 Molécula]
-    B --> C[🧬 Organismo]
-    C --> D[🧱 Template]
-    D --> E[💡 Experiência]
-```
+3. **Laboratórios e Grupos de Pesquisa**
 
-Cada nível é uma **nova camada de consciência do sistema**.
+   * Armazenar e cruzar experimentos, papers e bases de conhecimento.
+   * Construir pipelines de análise reprodutíveis.
 
----
+4. **Hackathons e Comunidades Locais**
 
-## 📚 Referências
-
-* Brad Frost — *Atomic Design*, 2013
-* Greg Egan — *Permutation City* (conceito de replicação digital)
-* Christopher Alexander — *A Pattern Language*
-* OpenAI Systems Thinking — *Composable Intelligence Patterns*, 2024
+   * Desenvolver agentes e fluxos em conjunto, com baixo custo de entrada.
+   * Integrar IA a problemas reais do território (educação, saúde, economia criativa).
 
 ---
 
-> **Versão:** 0.1.0
-> **Status:** 🟢 Em desenvolvimento ativo
-> **Papel no ecossistema:** DNA do framework — tudo nasce aqui.
+## 🌐 Filosofia Operacional
 
-```
+A arquitetura segue três princípios fundamentais:
 
-Assim garantimos continuidade visual, estrutural e conceitual.
-```
+1. **Autonomia Local** – os dados e agentes podem operar desconectados da nuvem.
+2. **Evolução Modular** – cada camada é expansível sem quebrar o sistema.
+3. **Transparência Educacional** – toda automação deve poder ser compreendida, editada e reusada.
+
+---
+
+## 🚀 Roadmap
+
+| Fase | Meta                                          | Status |
+| ---- | --------------------------------------------- | ------ |
+| v1.0 | Estrutura base e SLE Engine funcional         | ✅      |
+| v1.1 | Interface Web Educacional e CLI               | 🚧     |
+| v1.2 | Agentes locais independentes (offline)        | ⏳      |
+| v1.3 | Integração comunitária e repositórios abertos | 🔜     |
+
+---
+
+## 🧩 Contribuição
+
+Queremos que professores, desenvolvedores, artistas e pesquisadores **participem da criação de ferramentas locais inteligentes**.
+Sinta-se livre para propor módulos, agentes ou templates.
+
+* Documentação: `docs/`
+* Guia de desenvolvimento: `DEV_GUIDE.md`
+* Contato: [link a definir]
+
+---
+
