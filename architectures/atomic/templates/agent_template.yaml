@@ -1,0 +1,71 @@
+# -----------------------------------------------------------------
+# 🧩 Atomic Architecture - Template de Agente (Organismo)
+# templates/agent_template.yaml
+# -----------------------------------------------------------------
+#
+# Este é o "molde" para criar um novo Agente.
+# Copie este arquivo para o diretório /organisms/ e renomeie-o
+# (ex: organisms/agent_tradutor.yaml).
+#
+# O AtomicEngine (core/atomic_engine.py) lê este arquivo para
+# entender o que o agente faz e como executá-lo.
+#
+# -----------------------------------------------------------------
+
+# --- 1. Identificação (Obrigatório) ---
+
+# ID único do agente (nome do arquivo, sem .yaml)
+agent_id: "meu_novo_agente"
+
+# Nome legível para UIs e logs
+name: "Meu Novo Agente"
+
+# O que este agente faz?
+description: "Uma breve descrição da missão deste agente."
+
+# --- 2. Tipo de Execução (Obrigatório) ---
+
+# O 'type' define QUAL função no 'atomic_engine' será chamada.
+# Escolha UM dos tipos abaixo e preencha a seção correspondente.
+#
+# Tipos disponíveis:
+#   - 'llm_chat':     Um agente de chat/instrução que usa um LLM (Ollama).
+#   - 'internal_tool': Um agente que chama uma função interna (ex: Neo4j, Redis).
+#   - 'local_tool':    Um agente que executa um script Python em /organisms/tools/.
+#
+type: "llm_chat"  # Altere para o tipo desejado
+
+
+# -----------------------------------------------------------------
+# --- SEÇÃO A: Configuração para type: 'llm_chat' ---
+# (Usado para agentes de conversação, resumo, tradução, estruturação)
+# -----------------------------------------------------------------
+llm_config:
+  # O nome do modelo no Ollama (ex: 'mistral:latest', 'janhq/jan-v1-4b')
+  model: "mistral:latest"
+  
+  # O "prompt de sistema" define a persona e as regras do agente.
+  system_prompt: |
+    Você é um assistente prestativo.
+    Sua missão é responder de forma concisa e direta.
+
+
+# -----------------------------------------------------------------
+# --- SEÇÃO B: Configuração para type: 'internal_tool' ---
+# (Usado para agentes de sistema, ex: 'agent_mcp')
+# -----------------------------------------------------------------
+internal_tool_config:
+  # O nome exato da função dentro do _run_internal_tool no engine.
+  # (ex: 'save_to_graph_db', 'get_from_cache', 'add_to_zep_memory')
+  function_name: "save_to_graph_db"
+
+
+# -----------------------------------------------------------------
+# --- SEÇÃO C: Configuração para type: 'local_tool' ---
+# (Usado para ferramentas complexas ou isoladas, ex: 'agent_OCR')
+# -----------------------------------------------------------------
+local_tool_config:
+  # O nome do arquivo Python a ser executado via subprocesso.
+  # O script DEVE estar localizado em /organisms/tools/
+  # (ex: 'run_ocr.py', 'run_vision_analysis.py')
+  script_path: "meu_script_ferramenta.py"
