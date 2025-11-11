@@ -1,0 +1,25 @@
+# -----------------------------------------------------------------
+# 🧩 Atomic Architecture - Configuração do Prometheus
+# -----------------------------------------------------------------
+#
+# Define quais serviços o Prometheus deve monitorar (scrape).
+#
+global:
+  scrape_interval: 15s     # Intervalo padrão para buscar métricas
+  evaluation_interval: 15s # Intervalo padrão para avaliar regras
+
+scrape_configs:
+  # 1. O próprio Prometheus (para monitorar sua saúde)
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # 2. O Backend FastAPI (api_mcp)
+  #    Descomente esta seção quando o serviço 'backend' for adicionado
+  #    ao docker-compose.yml. Ele precisa expor um endpoint /metrics
+  #    (geralmente usando o 'prometheus-client' do requirements.txt).
+  #
+  #- job_name: 'atomic_backend'
+  #  static_configs:
+  #    # 'backend' deve ser o nome do serviço no docker-compose.yml
+  #    - targets: ['backend:8000']
