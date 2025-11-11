@@ -1,0 +1,121 @@
+meta:
+  id: atomic.architecture.v1
+  name: "⚛️ Atomic Architecture — Cognitive Microstructure"
+  version: 1.0
+  author: "Mia Framework Lab"
+  license: "CC-BY-SA-4.0"
+  description: >
+    Núcleo descritivo da Arquitetura Atômica. Define os átomos fundamentais — 
+    unidades mínimas de lógica, dados, linguagem e interface — que compõem 
+    a base modular de cognição estética e operacional do sistema ELS.
+
+  created_at: "2025-11-11"
+  last_updated: "2025-11-11"
+  status: "stable"
+
+---
+
+atoms:
+  logic:
+    description: >
+      Contém funções puras, operadores e transformações conceituais. 
+      É a camada de *cálculo e coerência interna* da arquitetura.
+    examples:
+      - normalize_text.py
+      - vector_distance.py
+    blueprint:
+      input: "dados textuais ou numéricos brutos"
+      process: "funções determinísticas, sem estado"
+      output: "vetores, valores normalizados ou resultados intermediários"
+    dependencies:
+      - numpy
+      - scikit-learn
+
+  prompt_units:
+    description: >
+      Fragmentos mínimos de linguagem: personas, estilos de raciocínio, estruturas de prompt.
+      Define a voz, intenção e coerência cognitiva da IA.
+    examples:
+      - persona_expert.yaml
+      - reasoning_chain.yaml
+    blueprint:
+      input: "instruções ou contexto semântico"
+      process: "expansão e modulação do raciocínio textual"
+      output: "prompt coerente, contextual e dirigido"
+    dependencies:
+      - pyyaml
+      - transformers
+
+  data_units:
+    description: >
+      Conjunto de dados contextuais mínimos: trechos, embeddings, ou corpora reduzidos. 
+      São a *memória atômica*, bases sobre as quais o raciocínio é contextualizado.
+    examples:
+      - micro_corpus.json
+      - semantic_vectors.pkl
+    blueprint:
+      input: "fontes externas ou datasets curados"
+      process: "extração, limpeza, redução e serialização"
+      output: "unidades de dados utilizáveis pelos operadores lógicos"
+    dependencies:
+      - pandas
+      - numpy
+      - faiss
+
+  ui_atoms:
+    description: >
+      Elementos mínimos de interface e visualização. Traduzem o raciocínio interno 
+      em percepção tangível — visão, toque, resposta.
+    examples:
+      - button_basic.py
+      - card_display.py
+      - input_text.py
+    blueprint:
+      input: "eventos ou estados internos do sistema"
+      process: "renderização visual e resposta de interação"
+      output: "feedback visual, perceptual ou auditivo"
+    dependencies:
+      - streamlit
+      - rich
+
+---
+
+relations:
+  - name: "logic → prompt_units"
+    description: "Operadores lógicos estruturam e validam o raciocínio textual."
+  - name: "prompt_units → data_units"
+    description: "Prompts dinâmicos acessam e interpretam contextos dos data_units."
+  - name: "data_units → ui_atoms"
+    description: "Dados processados são apresentados visualmente ao usuário."
+  - name: "ui_atoms → logic"
+    description: "Interações visuais podem disparar operações lógicas reativas."
+
+---
+
+blueprint_global:
+  input_flow: ["dados brutos", "instruções cognitivas"]
+  transformation: "fusão lógica-linguística"
+  output_flow: ["resposta contextual", "interface responsiva"]
+  goal: >
+    Estabelecer um ecossistema modular onde cada átomo
+    representa uma célula cognitiva mínima — integrada, recombinável
+    e autoexplicável.
+
+---
+
+metadata_tags:
+  domains: ["AI Architecture", "Prompt Engineering", "Cognitive Design"]
+  keywords: ["atomic", "framework", "ELS", "cognição estética", "microestruturas", "prompt modular"]
+  format: "YAML 1.2"
+  schema_version: "1.0.0"
+
+---
+
+visual_reference:
+  layout:
+    - logic (⚙️)
+    - prompt_units (🧩)
+    - data_units (🗃️)
+    - ui_atoms (🎨)
+  flow: >
+    ⚙️ → 🧩 → 🗃️ → 🎨 → (retroalimentação cognitiva) → ⚙️
