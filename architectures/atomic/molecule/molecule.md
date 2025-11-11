@@ -21,30 +21,91 @@ Cada molécula é composta por um conjunto de **átomos interconectados** e um *
 * o protocolo de comunicação entre os átomos
 * o grau de acoplamento semântico (baixo ou alto)
 
-### 📂 Exemplo de Estrutura
+
+# ⚗️ Estrutura Geral — `molecular/`
 
 ```
-molecules/
+molecular/
 │
-├── cognition/
-│   ├── classify_text/
-│   │   ├── __init__.py
-│   │   ├── molecule.yaml
-│   │   ├── atoms/
-│   │   │   ├── logic/
-│   │   │   │   ├── normalize_text.py
-│   │   │   │   └── vector_distance.py
-│   │   │   ├── prompt_units/
-│   │   │   │   └── reasoning_chain.yaml
-│   │   │   └── data_units/
-│   │   │       └── micro_corpus.json
-│   │   └── connector.py
-│   └── summarize_text/
-│       ├── molecule.yaml
-│       └── atoms/...
+├── README.md
 │
-└── meta.yaml
+├── classify_text/
+│   ├── molecule.yaml
+│   ├── pipeline.py
+│   ├── schema.yaml
+│   ├── atoms/
+│   │   ├── logic/
+│   │   │   ├── normalize_text.py
+│   │   │   └── vector_distance.py
+│   │   ├── data_units/
+│   │   │   └── micro_corpus.json
+│   │   └── prompt_units/
+│   │       └── reasoning_chain.yaml
+│   └── tests/
+│       └── test_pipeline.py
+│
+└── sentiment_analysis/
+    ├── molecule.yaml
+    ├── pipeline.py
+    ├── schema.yaml
+    └── atoms/
+        ├── logic/
+        │   └── sentiment_score.py
+        └── prompt_units/
+            └── mood_reasoning.yaml
 ```
+
+---
+
+# ⚗️ Molecular Layer — Composição de Átomos
+
+A **camada molecular** representa a **primeira forma de vida funcional** na Arquitetura Atômica.
+
+Enquanto os **átomos** são unidades puras e isoladas (funções, operadores, fragmentos de prompt ou dados),
+as **moléculas** são **sistemas coordenados** que reúnem esses átomos em **pipelines executáveis** — microfluxos de cognição.
+
+---
+
+## 🌿 Conceito
+
+Cada molécula:
+- É composta por **átomos** de diferentes tipos (logic, data, prompt, ui);
+- Possui um **esquema de entrada/saída (schema.yaml)**;
+- Define seu próprio **DNA funcional (molecule.yaml)**;
+- Expõe um **pipeline.py**, que é o script de composição.
+
+---
+
+## 🧩 Tipos de Moléculas
+
+| Tipo | Função | Exemplo |
+|------|---------|---------|
+| 🧠 **Cognitiva** | Processa linguagem, raciocínio e contexto | `classify_text/` |
+| 💾 **Analítica** | Agrega dados, faz predição e inferência | `sentiment_analysis/` |
+| 🎨 **Interface** | Organiza interações e microcomponentes UI | `compose_dashboard/` |
+
+---
+
+## ⚙️ Convenções
+
+- `molecule.yaml` → define o DNA estrutural (autor, tipo, IO, dependências)
+- `schema.yaml` → especifica formato de entrada/saída
+- `pipeline.py` → core funcional, interligando átomos
+- `atoms/` → contém os componentes reutilizados
+- `tests/` → define comportamentos esperados da molécula
+
+---
+
+## 🧬 Exemplo Visual
+
+```mermaid
+graph TD
+  A[normalize_text ⚛️] --> B[vector_distance ⚛️]
+  B --> C[data_unit.micro_corpus ⚛️]
+  C --> D[prompt_unit.reasoning_chain ⚛️]
+  D --> E[classify_text 🌿]
+  E --> F[output: categoria semântica]
+````
 
 ---
 
@@ -164,9 +225,57 @@ meta:
     - "molecules ↔ organisms (integração cognitiva)"
 ```
 
+## 💡 Filosofia Molecular
+
+> A molécula não é apenas um somatório de átomos —
+> ela é **um campo de relações vivas** que dá origem a comportamento.
+> Assim como na biologia, **o sentido emerge da composição**,
+> e não das partes isoladas.
+
 ---
 
-## 🌾 8. Síntese Filosófica
+## 🧱 Blueprint Padrão
+
+```yaml
+molecule:
+  id: mol.namespace.name
+  type: cognitive | analytic | interface
+  version: 1.0
+  author: "Nome do Criador"
+  description: >
+    Breve explicação sobre a molécula e sua função.
+  atoms_used:
+    - logic/
+    - prompt_units/
+    - data_units/
+  io:
+    input: texto
+    output: categoria
+  dependencies:
+    - numpy
+    - sklearn
+  connected_to:
+    - mol.namespace.other_molecule
+```
+
+---
+
+## 🔬 Objetivo
+
+Criar uma **biblioteca molecular**, onde cada unidade é um **organismo semântico modular**.
+Essas moléculas podem:
+
+* ser executadas isoladamente;
+* ser combinadas em **organismos complexos** (nível superior da arquitetura);
+* evoluir conforme feedback do sistema (aprendizado emergente).
+
+---
+
+> “Os átomos definem o que é possível.
+> As moléculas decidem o que é vivo.”
+
+
+## 🌾 Síntese Filosófica
 
 > Átomos são pensamentos.
 > Moléculas são relações.
