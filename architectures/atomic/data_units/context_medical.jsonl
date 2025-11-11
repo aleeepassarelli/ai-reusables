@@ -1,3 +1,12 @@
 {"topic": "pneumonia", "summary": "Infecção pulmonar causada por bactérias, vírus ou fungos. Os sintomas incluem febre, tosse produtiva e falta de ar."}
 {"topic": "tratamento", "summary": "O tratamento depende da causa. Antibióticos para casos bacterianos. Hidratação e repouso são fundamentais."}
 {"topic": "diagnóstico", "summary": "Feito com base em exame clínico, radiografia de tórax e análise laboratorial."}
+
+🧩 Uso:
+
+import json
+
+with open("atoms/data_units/context_medical.jsonl") as f:
+    docs = [json.loads(line) for line in f]
+
+rag.ingest(docs)
