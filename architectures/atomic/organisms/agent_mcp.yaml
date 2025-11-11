@@ -1,0 +1,22 @@
+# -----------------------------------------------------------------
+# 🧩 Organismo: agent_mcp.yaml (Agente Mestre)
+# -----------------------------------------------------------------
+agent_id: "agent_mcp"
+name: "Agente MCP (O Orquestrador)"
+description: "O Agente Root. Roteia tarefas e gerencia a memória (Pilha D)."
+
+# --- Tipo de Execução ---
+# Este agente chama funções DENTRO do AtomicEngine
+type: "internal_tool"
+
+# --- Configuração da Ferramenta Interna ---
+internal_tool_config:
+  # Cérebro: Jan-v1 4B (Otimizado para Tool Use)
+  # O 'model' é usado pelo engine para "decidir" qual ferramenta chamar
+  model: "janhq/jan-v1-4b" 
+  
+  # O nome da função no engine que este agente controla.
+  # O 'agent_mcp' é especial; ele pode chamar QUALQUER
+  # 'function_name', por isso o deixamos genérico ou o
+  # controlamos diretamente no engine.
+  function_name: "mcp_tool_dispatcher" # O engine saberá o que fazer
