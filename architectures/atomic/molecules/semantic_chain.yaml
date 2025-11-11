@@ -1,0 +1,91 @@
+# -----------------------------------------------------------------
+# 🧩 Atomic Architecture: Molde de Cadeia Semântica
+# molecules/semantic_chain.yaml
+# -----------------------------------------------------------------
+#
+# Este é o "molde" (template) para criar uma nova Molécula.
+# Copie este arquivo e renomeie-o para definir um novo fluxo.
+# (ex: molecules/processar_fatura.yaml)
+#
+# -----------------------------------------------------------------
+
+chain_id: "id_da_nova_cadeia_001"
+description: "Uma breve descrição do que este fluxo faz."
+
+# --- Gatilho (Input) ---
+# Define como esta cadeia é iniciada.
+input_trigger:
+  source: "web_interface" # ou "cli_demo" ou "api_call"
+  action: "file_upload"   # ou "form_submit", "button_click"
+  
+  # Quais parâmetros de entrada o AtomicEngine espera?
+  params:
+    - "parametro_de_entrada_1"
+    - "parametro_de_entrada_2"
+
+# -----------------------------------------------------------------
+# --- Esqueleto (Skeleton-of-Thought) ---
+# (Baseado no sot_framework.md - Nível 4: Estabilidade)
+# -----------------------------------------------------------------
+sot:
+  id: "pipeline_id_interno"
+  goal: "Descrição do objetivo final da cadeia."
+  context: "Contexto inicial ou problema a ser resolvido."
+  
+  # O 'esqueleto' define a estrutura lógica (5 etapas, 7 etapas, etc.)
+  skeleton:
+    - "etapa_logica_1"
+    - "etapa_logica_2"
+    - "etapa_logica_3"
+    - "..."
+
+# -----------------------------------------------------------------
+# --- Passos de Execução (Implementação do Esqueleto) ---
+# O AtomicEngine executa esta lista em ordem.
+# -----------------------------------------------------------------
+steps:
+  
+  # --- Passo 1: Exemplo ---
+  - step: 1
+    name: "etapa_logica_1" # Deve corresponder ao 'skeleton'
+    description: "Descrição da tarefa deste passo."
+    agent: "agent_nome.yaml" # (Organismo a ser chamado)
+    
+    # Mapeia o input ($. = contexto global)
+    input: "$.input_trigger.parametro_de_entrada_1"
+    
+    # Opcional: Um prompt se o agente for um LLM
+    prompt: "Faça esta tarefa específica com o input."
+      
+    # O resultado é salvo no contexto
+    output_variable: "saida_do_passo_1"
+
+  # --- Passo 2: Exemplo ---
+  - step: 2
+    name: "etapa_logica_2"
+    description: "Usa a saída do passo anterior."
+    agent: "agent_outro.yaml"
+    
+    # Usa a saída do Passo 1 como entrada
+    input: "$.steps[0].saida_do_passo_1"
+    
+    output_variable: "saida_do_passo_2"
+
+# -----------------------------------------------------------------
+# --- Relatório de Saída (Para Camada 4/5) ---
+# O AtomicEngine usa isso para formatar a resposta final.
+# -----------------------------------------------------------------
+output_report:
+  deliver_to: "web_interface" # Onde a resposta deve ir
+  
+  # Usa o template da Camada 4
+  template: "report_template.md"
+  
+  # Mapeia os dados do contexto para os placeholders do template
+  data:
+    chain_id: "id_da_nova_cadeia_001"
+    status: "$.steps[1].saida_do_passo_2.status_final" # Exemplo
+    timestamp: "CURRENT_TIMESTAMP"
+    summary: "Resumo da operação"
+    data: "$.steps[1].saida_do_passo_2" # Exemplo
+    node_id: "N/A"
