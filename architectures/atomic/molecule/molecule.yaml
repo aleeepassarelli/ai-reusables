@@ -1,0 +1,158 @@
+# ============================================================
+# 🧬 MOLECULE DEFINITION — Blueprint YAML
+# ============================================================
+# Cada molécula é uma composição semântica de átomos.
+# Ela representa um fluxo funcional autônomo e reutilizável.
+# ============================================================
+
+id: molecule.classify_text
+name: "Text Classification Molecule"
+version: "1.0.0"
+type: "molecule"
+author: "ELS Lab"
+license: "MIT"
+
+description: >
+  Molecula que combina múltiplos átomos para realizar a tarefa de
+  classificação de texto em categorias semânticas. O fluxo inclui:
+  normalização, vetorização, cálculo de distância e decisão de classe.
+
+tags:
+  - nlp
+  - pipeline
+  - classification
+  - atoms-composition
+
+created_at: "2025-11-11"
+last_modified: "2025-11-11"
+
+# ============================================================
+# 🔹 Inputs e Outputs
+# ============================================================
+
+inputs:
+  text:
+    type: string
+    description: "Texto bruto a ser classificado."
+  candidate_labels:
+    type: list
+    description: "Lista de possíveis categorias para classificação."
+
+outputs:
+  label:
+    type: string
+    description: "Rótulo mais provável do texto."
+  confidence:
+    type: float
+    description: "Nível de confiança da classificação."
+
+# ============================================================
+# 🔹 Átomos envolvidos (dependências diretas)
+# ============================================================
+
+atoms:
+  - id: logic.normalize_text
+    path: "../atoms/logic/normalize_text.py"
+    function: "normalize_text"
+  - id: logic.vector_distance
+    path: "../atoms/logic/vector_distance.py"
+    function: "vector_distance"
+  - id: data_units.labels_dataset
+    path: "../atoms/data_units/labels.json"
+  - id: prompt_units.persona_expert
+    path: "../atoms/prompt_units/persona_expert.yaml"
+
+# ============================================================
+# 🔹 Pipeline — Ordem de Execução
+# ============================================================
+
+pipeline:
+  - step: normalize_input
+    uses: logic.normalize_text
+    input_map:
+      text: "@inputs.text"
+    output_map:
+      normalized: "normalized_text"
+
+  - step: vectorize
+    uses: "embedding_model"
+    input_map:
+      text: "@pipeline.normalized_text"
+    output_map:
+      vector: "text_vector"
+
+  - step: compare_with_labels
+    uses: logic.vector_distance
+    input_map:
+      vector: "@pipeline.text_vector"
+      labels: "@inputs.candidate_labels"
+    output_map:
+      scores: "label_scores"
+
+  - step: choose_label
+    uses: "internal.selector"
+    input_map:
+      scores: "@pipeline.label_scores"
+    output_map:
+      label: "predicted_label"
+      confidence: "predicted_confidence"
+
+# ============================================================
+# 🔹 Configurações e Contexto Cognitivo
+# ============================================================
+
+context:
+  prompt_profile: "@atoms.prompt_units.persona_expert"
+  model: "qwen-4b-instruct"
+  temperature: 0.3
+  top_p: 0.9
+  max_tokens: 512
+
+# ============================================================
+# 🔹 Observabilidade
+# ============================================================
+
+metrics:
+  log_steps: true
+  save_vectors: false
+  trace_enabled: true
+  telemetry_topic: "molecule.classify_text.activity"
+
+# ============================================================
+# 🔹 Dependências externas
+# ============================================================
+
+requirements:
+  - torch>=2.0
+  - sentence-transformers
+  - scikit-learn
+  - pyyaml
+  - numpy
+  - orjson
+
+# ============================================================
+# 🔹 Exemplo de uso
+# ============================================================
+
+example:
+  run: |
+    from molecules.classify_text import run_molecule
+
+    result = run_molecule(
+        text="A IA está revolucionando a educação personalizada.",
+        candidate_labels=["tecnologia", "educação", "saúde"]
+    )
+
+    print(result)
+  expected_output:
+    label: "educação"
+    confidence: 0.87
+
+# ============================================================
+# 🔹 Inspiração simbólica
+# ============================================================
+
+symbolic_note: >
+  Uma molécula é uma dança harmônica de átomos,
+  cada um vibrando com função própria, mas ressoando
+  com um propósito comum: gerar sentido.
