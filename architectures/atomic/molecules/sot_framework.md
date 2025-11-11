@@ -6,13 +6,13 @@
 
 ---
 
-## 1. Conceito
+## Conceito
 O **Skeleton-of-Thought (SoT)** é a fase em que o sistema organiza seu raciocínio em **uma estrutura mínima coerente**, criando um *esqueleto* lógico antes de gerar conteúdo completo.  
 Ele evita dispersão, garante consistência e fornece uma “espinha dorsal” para que agentes ou processos subsequentes possam expandir o contexto sem perda de integridade semântica.
 
 ---
 
-## 2. Função na Arquitetura ELS
+## Função na Arquitetura ELS
 | Componente | Papel no Fluxo |
 |-------------|----------------|
 | **Entrada** | Ideia, contexto ou problema bruto (ruído sem estrutura). |
@@ -23,7 +23,7 @@ O SoT atua como uma **ferramenta de estabilização cognitiva**. Ele é acionado
 
 ---
 
-## 3. Estrutura Operacional
+## Estrutura Operacional
 Um SoT segue o seguinte formato interno:
 
 ```yaml
