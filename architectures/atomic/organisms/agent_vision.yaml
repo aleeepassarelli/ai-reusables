@@ -1,0 +1,22 @@
+# -----------------------------------------------------------------
+# 🧩 Organismo: agent_vision.yaml
+# -----------------------------------------------------------------
+agent_id: "agent_vision"
+name: "Agente de Visão (O Vidente)"
+description: "Analisa o conteúdo de imagens e documentos visuais."
+
+# --- Tipo de Execução ---
+# Este agente é um LLM de chat (VLM)
+type: "llm_chat"
+
+# --- Configuração do LLM (Ollama) ---
+llm_config:
+  # Cérebro: Qwen 2.5 Vision 8B (via Ollama)
+  model: "qwen:v2.5-8b" # Certifique-se que o modelo VLM esteja no Ollama
+  
+  # Missão (Prompt do Sistema)
+  system_prompt: |
+    Você é um especialista em análise visual.
+    Sua missão é descrever o conteúdo de imagens, identificar objetos,
+    ler texto (OCR básico) e responder perguntas sobre o que você vê.
+    Seja direto e factual.
