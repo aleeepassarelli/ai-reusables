@@ -1,0 +1,148 @@
+# -----------------------------------------------------------------
+# 🧩 Atomic Architecture - Docker Compose
+# -----------------------------------------------------------------
+#
+# Este arquivo define os serviços de infraestrutura (Stack C).
+#
+# --- Como usar os Perfis (Profiles) ---
+#
+# 1. Iniciar APENAS os serviços base (Neo4j, Redis):
+#    (Obrigatório para a 'api_mcp' funcionar)
+#    docker-compose up -d
+#
+# 2. Iniciar TUDO (Base + AI Local + Monitoramento):
+#    (Recomendado para desenvolvimento completo)
+#    docker-compose --profile dev up -d
+#
+# -----------------------------------------------------------------
+
+version: '3.8'
+
+services:
+  # ----------------------------------------------------
+  # --- SERVIÇOS BASE (Sempre ligados) ---
+  # ----------------------------------------------------
+  
+  # 1. Neo4j (Memória de Grafo - Camada 1)
+  # (Conforme solicitado: neo4j:5.26)
+  neo4j:
+    image: neo4j:5.26
+    container_name: atomic_neo4j
+    ports:
+      - "7474:7474" # Interface Web HTTP
+      - "7687:7687" # Porta Bolt (usada pelo 'graphiti-core' e 'neo4j' driver)
+    environment:
+      # Defina uma senha forte em um .env
+      - NEO4J_AUTH=neo4j/sua-senha-segura-aqui
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O /dev/null http://localhost:7474 || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  # 2. Redis (Cache de Sessão e Filas - Camada 1)
+  # (Conforme solicitado: redis:latest)
+  redis:
+    image: redis:latest
+    container_name: atomic_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ----------------------------------------------------
+  # --- PERFIL "dev": AI Local & Monitoramento ---
+  # ----------------------------------------------------
+  
+  # 3. Ollama (Servidor de IA Local - Camada 3)
+  # (Conforme solicitado: ollama/ollama)
+  ollama:
+    image: ollama/ollama
+    container_name: atomic_ollama
+    # Ativa o perfil 'dev' para este serviço
+    profiles: ["dev"]
+    ports:
+      - "11434:11434"
+    volumes:
+      # Persiste os modelos de IA baixados
+      - ollama_data:/root/.ollama
+    # Configuração para acesso à GPU (se disponível)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+
+  # 4. Prometheus (Coleta de Métricas)
+  # (Conforme solicitado: prom/prometheus)
+  prometheus:
+    image: prom/prometheus
+    container_name: atomic_prometheus
+    profiles: ["dev"]
+    ports:
+      - "9090:9090"
+    volumes:
+      # Requer um 'prometheus.yml' de configuração
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml
+
+  # 5. Grafana (Visualização de Métricas)
+  # (Conforme solicitado: grafana/grafana)
+  grafana:
+    image: grafana/grafana
+    container_name: atomic_grafana
+    profiles: ["dev"]
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+# ----------------------------------------------------
+# --- Volumes Persistentes ---
+# ----------------------------------------------------
+volumes:
+  neo4j_data:
+  redis_data:
+  ollama_data:
+  prometheus_data:
+  grafana_data:
+
+  ⚠️ Ações Necessárias (Importante!)
+Este docker-compose.yml não funcionará sozinho. Ele tem duas dependências externas que você precisa criar:
+
+Configuração do Prometheus: O serviço prometheus falhará ao iniciar se não encontrar o arquivo de configuração. Crie uma pasta config na raiz do projeto e, dentro dela, um arquivo prometheus.yml:
+
+Crie o arquivo: config/prometheus.yml
+
+YAML
+
+# config/prometheus.yml
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Adicione aqui seus outros serviços (ex: 'atomic_backend')
+  # quando eles estiverem prontos para serem monitorados.
+  #- job_name: 'atomic_backend'
+  #  static_configs:
+  #    - targets: ['atomic_backend:8000'] 
+Puxar o Modelo Jan (Ollama): O serviço ollama inicia vazio. Após iniciá-lo (docker-compose --profile dev up -d), você precisa executar este comando para baixar o jan-v1-4B (o seu agent_mcp):
+
+Bash
+
+docker exec -it atomic_ollama ollama pull janhq/jan-v1-4b
