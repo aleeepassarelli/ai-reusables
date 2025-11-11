@@ -1,0 +1,152 @@
+# -----------------------------------------------------------------
+# 🧩 Atomic Architecture: Cadeia Semântica (Molécula)
+# molecules/proc_matricula_001.yaml
+# -----------------------------------------------------------------
+#
+# CADEIA ID: proc_matricula_001
+# DESCRIÇÃO: Caso de Uso da Escola. Processa um formulário de matrícula
+#            escaneado (PDF/Imagem), extrai, valida e salva os dados.
+#
+# -----------------------------------------------------------------
+
+chain_id: "proc_matricula_001"
+description: "Fluxo de processamento de formulários de matrícula escaneados."
+
+# --- Gatilho (Input) ---
+# Define como esta cadeia é iniciada.
+input_trigger:
+  source: "web_interface"
+  action: "file_upload"
+  # O payload de entrada esperado. Ex: { "file_path": "/tmp/doc.pdf" }
+  params:
+    - "file_path"
+
+# -----------------------------------------------------------------
+# --- Esqueleto (Skeleton-of-Thought) ---
+# (Baseado no sot_framework.md - Nível 4: Estabilidade)
+# -----------------------------------------------------------------
+sot:
+  id: "matricula_pipeline"
+  goal: "Processar formulários de matrícula."
+  context: "PDFs ou imagens digitalizadas enviadas pela secretaria."
+  
+  # O 'esqueleto' define a estrutura lógica que o 'steps' (passos)
+  # abaixo deve seguir.
+  skeleton:
+    - "leitura_OCR"
+    - "extracao_campos"
+    - "validacao_dados"
+    - "gravacao_banco"
+    - "relatorio_final"
+
+# -----------------------------------------------------------------
+# --- Passos de Execução (Implementação do Esqueleto) ---
+# O AtomicEngine executa esta lista em ordem.
+# -----------------------------------------------------------------
+steps:
+  
+  # --- Passo 1: Leitura OCR ---
+  - step: 1
+    name: "leitura_OCR"
+    description: "Usa o agente OCR semântico para ler o arquivo."
+    agent: "agent_OCR.yaml" # (Organismo)
+    
+    # Mapeia o 'file_path' do gatilho para a entrada do agente
+    input: "$.input_trigger.file_path"
+    
+    # O resultado é salvo no contexto
+    output_variable: "raw_markdown_content"
+
+  # --- Passo 2: Extração de Campos ---
+  - step: 2
+    name: "extracao_campos"
+    description: "Usa o agente de estruturação para extrair entidades do texto."
+    agent: "agent_text_struct.yaml" # (Organismo)
+    
+    # Usa a saída do passo anterior como entrada
+    input: "$.steps[0].raw_markdown_content"
+    
+    # O 'prompt' semântico que guia o agente de extração (Nível 4)
+    prompt: |
+      Analise o texto da ficha de matrícula e extraia as seguintes
+      informações em formato JSON:
+      - 'nome_aluno': (String) Nome completo do aluno.
+      - 'cpf_aluno': (String) CPF do aluno, formatado (XXX.XXX.XXX-XX).
+      - 'data_nascimento': (String) Data de nascimento (AAAA-MM-DD).
+      - 'nome_responsavel': (String) Nome completo do responsável.
+      - 'cpf_responsavel': (String) CPF do responsável.
+      - 'telefone_contato': (String) Telefone com DDD.
+
+    output_variable: "structured_json_data"
+
+  # --- Passo 3: Validação de Dados ---
+  - step: 3
+    name: "validacao_dados"
+    description: "Usa um agente assistente para validar os dados extraídos (Nível 5: Rigor)."
+    agent: "agent_assistant.yaml" # (Organismo - Mistral)
+    
+    # Usa a saída JSON do Passo 2 como entrada
+    input: "$.steps[1].structured_json_data"
+    
+    prompt: |
+      Analise o JSON. O 'cpf_aluno' é válido? O 'data_nascimento' é uma data real?
+      Responda APENAS em formato JSON:
+      {
+        "is_valid": true/false,
+        "errors": ["(lista de erros, se houver)"]
+      }
+    
+    output_variable: "validation_report"
+
+  # --- Passo 4: Gravação no Banco ---
+  - step: 4
+    name: "gravacao_banco"
+    description: "Usa o agente MCP para salvar os dados no Grafo (Camada 1)."
+    agent: "agent_mcp.yaml" # (Organismo - Jan v1-4B)
+    
+    # O input para a ferramenta 'save_to_graph_db'
+    # (Note: O input vem do Passo 2, os dados validados)
+    input:
+      data: "$.steps[1].structured_json_data"
+      # Parâmetros que dizem à 'api_mcp' como salvar.
+      params:
+        target_db: "graphiti_neo4j"
+        entity_type: "Aluno"
+        primary_key: "cpf_aluno"
+        
+    output_variable: "db_save_status" # Ex: { "status": "success", "node_id": "..." }
+
+  # --- Passo 5: Relatório Final ---
+  - step: 5
+    name: "relatorio_final"
+    description: "Gera um resumo da operação para o usuário."
+    agent: "agent_assistant.yaml" # (Organismo - Mistral)
+    
+    input:
+      - "$.steps[1].structured_json_data.nome_aluno"
+      - "$.steps[3].db_save_status.status"
+    
+    prompt: |
+      O aluno '{{ input[0] }}' foi processado com status '{{ input[1] }}'.
+      Escreva um resumo de 1 linha sobre esta operação.
+    
+    output_variable: "summary_text"
+
+# -----------------------------------------------------------------
+# --- Relatório de Saída (Para Camada 4/5) ---
+# O AtomicEngine usa isso para formatar a resposta final.
+# -----------------------------------------------------------------
+output_report:
+  deliver_to: "web_interface"
+  
+  # Usa o template da Camada 4
+  template: "report_template.md"
+  
+  # Mapeia os dados do contexto para os placeholders do template
+  data:
+    chain_id: "proc_matricula_001"
+    status: "$.steps[3].db_save_status.status"
+    timestamp: "CURRENT_TIMESTAMP" # O engine deve substituir isso
+    summary: "$.steps[4].summary_text.raw_text"
+    data: "$.steps[1].structured_json_data"
+    node_id: "$.steps[3].db_save_status.node_id"
