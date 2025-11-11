@@ -1,0 +1,42 @@
+chain_id: "design_thinking_001"
+description: "Executa um ciclo de Design Thinking (Classe 5) sobre um problema."
+
+# O 'sot_framework' define a estrutura
+sot:
+  id: design_thinking_pipeline
+  goal: "Resolver um problema de usuário usando Design Thinking."
+  
+  # As 5 etapas do seu arquétipo:
+  skeleton:
+    - empatizar
+    - definir
+    - idear
+    - prototipar
+    - testar
+
+# O 'atomic_engine' executa o esqueleto chamando os agentes:
+steps:
+  - step: 1
+    name: "Empatizar"
+    agent: "agent_researcher.yaml" # (Ex: um agente focado em RAG)
+    input: "$.input_trigger.problema"
+  
+  - step: 2
+    name: "Definir"
+    agent: "agent_text_struct.yaml" # (Ex: resume e estrutura a pesquisa)
+    input: "$.steps[0].output"
+
+  - step: 3
+    name: "Idear"
+    agent: "agent_creative.yaml" # (Ex: usa ToT - Nível 3 Criativo)
+    input: "$.steps[1].output"
+
+  - step: 4
+    name: "Prototipar"
+    agent: "agent_code.yaml" # (Ex: gera um esboço de código ou UI)
+    input: "$.steps[2].output"
+
+  - step: 5
+    name: "Testar"
+    agent: "agent_validator.yaml" # (Ex: usa Self-Refine - Nível 5 Disruptivo)
+    input: "$.steps[3].output"
