@@ -1,0 +1,79 @@
+%% ============================================================
+%%  FILE: architecture_layers.mmd
+%%  TITLE: Cellular Architecture — Internal Layer Diagram
+%%  AUTHOR: Alexandre Passarelli
+%%  YEAR: 2025
+%% ============================================================
+
+flowchart TD
+
+%% ───────────────────────────────
+%%  CORE LAYERS
+%% ───────────────────────────────
+
+A1["📡 Presentation Layer<br><small>Endpoints / Input Validation</small>"]
+A2["⚙️ Business Logic Layer<br><small>Rules, Use Cases, Services</small>"]
+A3["🗄️ Data Access Layer<br><small>Repositories / Database</small>"]
+A4["🧠 Memory Layer<br><small>Vector DB / Semantic Context</small>"]
+A5["📊 Monitoring & Metrics<br><small>Logs / Health / Telemetry</small>"]
+
+%% ───────────────────────────────
+%%  LAYER FLOW
+%% ───────────────────────────────
+
+A1 --> A2
+A2 --> A3
+A2 --> A4
+A2 --> A5
+
+A3 --> A2
+A4 --> A2
+A5 --> A2
+
+%% ───────────────────────────────
+%%  SUPPORT COMPONENTS
+%% ───────────────────────────────
+
+subgraph External [🌐 External Systems]
+    EXT1["Client / API Gateway"]
+    EXT2["Router / Load Balancer"]
+end
+
+EXT1 --> A1
+EXT2 --> A1
+
+subgraph Monitoring [📈 Observability]
+    MON1["Prometheus"]
+    MON2["Grafana"]
+end
+
+A5 --> MON1
+MON1 --> MON2
+
+%% ───────────────────────────────
+%%  DATA STORES
+%% ───────────────────────────────
+
+subgraph Databases [💾 Data Stores]
+    DB1["PostgreSQL / SQL"]
+    DB2["Redis / Cache"]
+    DB3["Qdrant / Vector Store"]
+end
+
+A3 --> DB1
+A3 --> DB2
+A4 --> DB3
+
+%% ───────────────────────────────
+%%  NOTES
+%% ───────────────────────────────
+
+classDef core fill:#1e293b,stroke:#94a3b8,color:#f1f5f9,font-weight:bold
+classDef support fill:#334155,stroke:#64748b,color:#e2e8f0
+classDef data fill:#0f172a,stroke:#64748b,color:#e2e8f0
+classDef external fill:#0f172a,stroke:#475569,color:#cbd5e1
+
+class A1,A2,A3,A4,A5 core
+class EXT1,EXT2 external
+class MON1,MON2 support
+class DB1,DB2,DB3 data
