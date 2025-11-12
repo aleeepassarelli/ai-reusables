@@ -155,4 +155,7 @@ Desenvolvido por **Alexandre Passarelli**
 Parte integrante do projeto **AI Reusables Framework — Galáxias de Arquiteturas Educacionais**
 
 ```
+```mermaid
+%% include ./DOC/architecture_layers.mmd
+
 
