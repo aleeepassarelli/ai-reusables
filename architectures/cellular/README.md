@@ -1,9 +1,3 @@
-
-╔══════════════════════════════════════════════╗
-║        🧩 CELLULAR ARCHITECTURE v1.0         ║
-║  Modular · Escalável · Open Source  · Edu    ║
-╚══════════════════════════════════════════════╝
-
 # 🧩 Cellular Architecture — Arquitetura Modular e Escalável
 
 > Estrutura técnica orientada a **módulos independentes (células)**, projetada para aplicações **educacionais, distribuídas e de alta manutenibilidade**.  
