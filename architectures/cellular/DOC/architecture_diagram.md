@@ -1,9 +1,7 @@
+     🧩  ARCHITECTURE DIAGRAM — CELLULAR     
+          Estrutura Modular e Escalável           
 
-╔══════════════════════════════════════════════════╗
-║          🧩  ARCHITECTURE DIAGRAM — CELLULAR     ║
-║          Estrutura Modular e Escalável           ║
-╚══════════════════════════════════════════════════╝
-
+---
 ```mermaid
 %% Cellular Architecture – Diagrama Geral
 flowchart TD
