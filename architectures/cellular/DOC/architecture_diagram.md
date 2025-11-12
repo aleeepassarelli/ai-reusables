@@ -1,3 +1,10 @@
+
+╔══════════════════════════════════════════════════╗
+║          🧩  ARCHITECTURE DIAGRAM — CELLULAR     ║
+║          Estrutura Modular e Escalável           ║
+╚══════════════════════════════════════════════════╝
+
+```mermaid
 %% Cellular Architecture – Diagrama Geral
 flowchart TD
 
@@ -55,3 +62,49 @@ class R router;
 class C1,C2,C3 cell;
 class CTRL control;
 class G,P observ;
+````
+
+---
+
+### 📘 Legenda
+
+| Ícone | Componente                | Função Principal                             |
+| ----- | ------------------------- | -------------------------------------------- |
+| 🧭    | **Cell Router**           | Direciona requisições entre células          |
+| 🧫    | **Célula (Microserviço)** | Unidade independente de lógica e dados       |
+| 🧬    | **Cell Controller**       | Supervisiona e gerencia o cluster de células |
+| 📈    | **Grafana**               | Observabilidade visual e dashboards          |
+| 📡    | **Prometheus**            | Métricas e monitoramento                     |
+| 🗃️   | **Database**              | Armazenamento isolado por célula             |
+
+---
+
+### 🧩 Explicação Visual
+
+**Fluxo de requisição:**
+
+```
+Usuário → Cell Router → Célula alvo → Banco local → Métricas → Controle
+```
+
+**Ciclo de supervisão:**
+
+```
+Controller → Health Check → Métricas → Ações (clonar, pausar, reiniciar)
+```
+
+---
+
+### 🔗 Integração Recomendada
+
+* O diagrama pode ser renderizado automaticamente no Obsidian, GitHub ou documentação em MkDocs/Docusaurus.
+* Link sugerido no `README.md` principal:
+
+```markdown
+📊 **Diagrama da Arquitetura:** [DOC/architecture_diagram.mmd](DOC/architecture_diagram.mmd)
+```
+
+---
+
+Deseja que eu gere também o **`DOC/architecture_layers.mmd`** — um segundo diagrama complementar mostrando a **estrutura interna de uma única célula** (Presentation → Business → Data → Memory → Monitoring)?
+Ele ficaria visualmente coordenado com esse, e ideal para o kit educacional.
