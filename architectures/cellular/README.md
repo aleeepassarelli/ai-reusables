@@ -1,42 +1,55 @@
-# 🧬 Cellular Architecture — Sistemas Vivos e Escaláveis
 
-> Uma arquitetura inspirada em **biologia**, projetada para criar **sistemas distribuídos**, **resilientes** e **educacionais**.  
-> Cada célula é uma unidade autônoma que pensa, armazena, e se comunica com as outras.
+╔══════════════════════════════════════════════╗
+║        🧩 CELLULAR ARCHITECTURE v1.0         ║
+║  Modular · Escalável · Open Source  · Edu    ║
+╚══════════════════════════════════════════════╝
 
----
+# 🧩 Cellular Architecture — Arquitetura Modular e Escalável
 
-## 🌱 1. CONCEITO
-
-A **Cellular Architecture** nasce da ideia de que um sistema pode funcionar como um **organismo vivo**:  
-composto por **células independentes**, cada uma com suas funções, mas colaborando em harmonia.
-
-💡 **Analogia biológica:**
-- 🧫 **Célula** → Microserviço completo (com seu banco, lógica e API)  
-- 🧠 **Núcleo** → Regras de negócio local  
-- 🧍 **Organismo** → O sistema escolar (ou qualquer aplicação)  
-- 🕸️ **Rede neural** → O roteador celular, que conecta todas as células  
+> Estrutura técnica orientada a **módulos independentes (células)**, projetada para aplicações **educacionais, distribuídas e de alta manutenibilidade**.  
+> Cada célula é um serviço completo — com sua própria API, lógica de negócio e camada de dados — que se conecta a um **roteador central** responsável por gerenciar o tráfego e a comunicação entre unidades.
 
 ---
 
-## 🧩 2. ESTRUTURA GERAL
+## 📚 Visão Geral
+
+A **Cellular Architecture** propõe uma abordagem clara e prática para construir sistemas **modulares e reutilizáveis**, mantendo simplicidade estrutural mesmo em ambientes com múltiplos serviços.
+
+Inspirada nas boas práticas de **microserviços, n-tier e DDD**, essa arquitetura visa democratizar conceitos avançados de engenharia de software para **escolas, startups e pequenos negócios** que desejam entender e aplicar padrões modernos de forma acessível.
+
+---
+
+## 🧠 Conceito Central
+
+Em vez de um monólito único, o sistema é formado por **células modulares** — cada uma responsável por uma função específica (usuários, agendamentos, relatórios, etc).  
+Essas células comunicam-se por meio de um **roteador inteligente**, permitindo:
+
+- Escalabilidade horizontal;
+- Isolamento de falhas;
+- Implantação e manutenção independentes;
+- Reutilização entre projetos educacionais e corporativos.
+
+---
+
+## 🏗️ Estrutura de Pastas
 
 ```
 
-/cellular-architecture
+/sistema_escola_celulas
 │
-├── /cell-template                # Template base para infraestrutura
-│   ├── main.tf                   # Terraform (ou CloudFormation)
+├── /cell-template                # Template base de infraestrutura (Terraform / CloudFormation)
+│   ├── main.tf
 │   ├── variables.tf
 │   └── outputs.tf
 │
-├── /microservice-appointments    # Serviço de agendamentos (API FastAPI)
+├── /microservice-appointments    # Serviço de Agendamento
 │   ├── /presentation
 │   ├── /business
 │   └── /data_access
 │
-├── /microservice-users           # Serviço de usuários (login, perfis)
+├── /microservice-users           # Serviço de Usuários
 │
-└── /cell-router                  # Núcleo de roteamento e controle
+└── /cell-router                  # Roteador Central
 ├── router_config.yaml
 └── deployment_script.sh
 
@@ -44,194 +57,99 @@ composto por **células independentes**, cada uma com suas funções, mas colabo
 
 ---
 
-## ⚙️ 3. FLUXO CELULAR
+## ⚙️ Componentes Principais
 
-Cada célula é **autônoma**, **reutilizável** e **isolada** — mas todas se comunicam via o **Cell Router**.
-
-```mermaid
-flowchart LR
-A[Usuário 👩‍💻] -->|Request| B[🧭 Cell Router]
-B -->|Regra A-M| C[🧫 Célula A]
-B -->|Regra N-Z| D[🧫 Célula B]
-C --> E[(Banco A)]
-D --> F[(Banco B)]
-B --> G[🧬 Painel de Controle]
-````
-
-* O **Cell Router** recebe as requisições e decide **qual célula** processará.
-* Cada **célula** contém seu próprio banco e lógica, o que garante isolamento e resiliência.
-* O **painel de controle** supervisiona o conjunto e pode clonar, pausar ou replicar células.
+| Componente | Função | Deployment |
+|-------------|--------|-------------|
+| **Cell Router** | Direciona requisições com base em regras (usuário, região, célula ativa). | Servidor de Roteamento (Load Balancer avançado) |
+| **Célula A** | Serviço completo (ex: usuários A–M). | API + Banco de Dados isolado |
+| **Célula B** | Serviço completo (ex: usuários N–Z). | API + Banco de Dados isolado |
+| **Célula de Controle** | Coordena e monitora todas as células. | Painel administrativo e métrico |
 
 ---
 
-## 🧱 4. CAMADAS INTERNAS DE UMA CÉLULA
+## 🧩 Benefícios Técnicos
 
-Cada célula segue uma estrutura modular:
-
-```mermaid
-graph TD
-A[Apresentação] --> B[Lógica de Negócio]
-B --> C[Acesso a Dados]
-C --> D[Memória Local / Vetorial]
-```
-
-| Camada           | Função                                 | Exemplo                     |
-| ---------------- | -------------------------------------- | --------------------------- |
-| **Presentation** | API FastAPI (entrada de requisições)   | `/routes/appointments.py`   |
-| **Business**     | Regras de negócio (validações, fluxos) | `/services/logic.py`        |
-| **Data Access**  | Persistência de dados                  | `/repositories/postgres.py` |
-| **Memory Layer** | Memória vetorial ou grafo              | `zep`, `qdrant`, `graphiti` |
+✅ **Isolamento e segurança** — cada módulo possui seu próprio ambiente de execução.  
+⚙️ **Escalabilidade horizontal** — fácil replicação de células sob demanda.  
+🔁 **Reuso e portabilidade** — células podem ser implantadas em múltiplos projetos.  
+📦 **Padrão educacional claro** — cada célula ensina um conceito de arquitetura real.  
+📊 **Observabilidade nativa** — compatível com Prometheus, Grafana e ferramentas open source.  
 
 ---
 
-## 🧩 5. STACK TECNOLÓGICA
+## 🚀 Requisitos Técnicos
 
-| Nível               | Tecnologia                 | Descrição                           |
-| ------------------- | -------------------------- | ----------------------------------- |
-| **API Core**        | FastAPI, Uvicorn, Pydantic | Backend leve e assíncrono           |
-| **Segurança**       | PyJWT, Cryptography, JOSE  | Tokens, autenticação e criptografia |
-| **Memória e Grafo** | Graphiti-Core, Zep, Neo4j  | Persistência e raciocínio semântico |
-| **Vetores**         | Qdrant                     | Armazenamento vetorial              |
-| **Infraestrutura**  | Terraform, Docker          | Provisionamento e containers        |
-| **Monitoramento**   | Prometheus, Grafana        | Observabilidade e métricas          |
+- **Python 3.11+**
+- **FastAPI** (API Layer)
+- **PostgreSQL / Redis / Qdrant**
+- **Docker Compose** (ambiente local)
+- **Prometheus + Grafana** (observabilidade)
+- **Terraform / CloudFormation** (infraestrutura opcional)
 
 ---
 
-## 🧠 6. COMO EXECUTAR
-
-### 1️⃣ Clonar o Repositório
-
-```bash
-git clone https://github.com/seu-usuario/AI_Reusables_Framework.git
-cd AI_Reusables_Framework/cellular-architecture
-```
-
-### 2️⃣ Subir Ambiente
-
-```bash
-docker-compose up --build
-```
-
-### 3️⃣ Rodar APIs Locais
-
-```bash
-cd microservice-users
-uvicorn main:app --reload --port 8001
-
-cd ../microservice-appointments
-uvicorn main:app --reload --port 8002
-```
-
-### 4️⃣ Roteador Celular
-
-```bash
-cd cell-router
-python main.py
-```
-
----
-
-## 🧬 7. COMO ESCALAR CÉLULAS
-
-Você pode criar novas células clonando o `cell-template`:
-
-```bash
-cp -r cell-template microservice-inventory
-```
-
-E adicionando-a no roteador:
-
-```yaml
-# router_config.yaml
-routes:
-  users: http://localhost:8001
-  appointments: http://localhost:8002
-  inventory: http://localhost:8003
-```
-
-> ⚡ Cada nova célula é um novo mundo — independente, mas conectado.
-
----
-
-## 🧩 8. PADRÕES REUTILIZÁVEIS (AI-READY)
-
-Cada célula pode integrar **IA Reusables** diretamente do repositório principal:
-
-```
-from core_engineering.prompt_modular import PromptBuilder
-from core_engineering.scheme_traductor import SchemeAdapter
-```
-
-📘 Exemplo:
+## 🧰 Stack Técnica (Exemplo)
 
 ```python
-from core_engineering.prompt_modular import PromptBuilder
+# Núcleo de execução (FastAPI)
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+pydantic==2.10.0
+httpx==0.27.0
+gunicorn==23.0.0
 
-prompt = PromptBuilder()
-prompt.add("persona/assistant.yaml")
-prompt.add("format/json_output.yaml")
+# Banco de dados e cache
+asyncpg==0.29.0
+redis==5.2.0
 
-system_prompt = prompt.build()
-```
+# Observabilidade
+prometheus-client==0.21.0
+watchfiles==0.24.0
 
----
-
-## 🎓 9. CASO DE USO EDUCACIONAL
-
-**Sistema Escolar Celular** — um protótipo didático de como aplicar a arquitetura.
-
-| Célula                 | Função                | Escopo                |
-| ---------------------- | --------------------- | --------------------- |
-| **Célula A**           | Atende usuários A–M   | Banco + API isolada   |
-| **Célula B**           | Atende usuários N–Z   | Banco + API isolada   |
-| **Célula de Controle** | Gerencia o sistema    | Painel administrativo |
-| **Cell Router**        | Direciona requisições | Load Balancer lógico  |
+# Segurança
+python-jose==3.3.0
+cryptography==43.0.0
+````
 
 ---
 
-## 🔭 10. VISÃO FILOSÓFICA
+## 🧠 Casos de Uso Recomendados
 
-> “Quando um sistema cresce demais, ele deixa de aprender.
-> Quando se divide em células, ele começa a evoluir.”
-
-A arquitetura celular permite:
-
-* Escalabilidade orgânica 🌿
-* Isolamento e resiliência 🔒
-* Reuso e replicabilidade ♻️
-* Educação e experimentação 💡
+* **Plataformas educacionais** com múltiplas turmas ou escolas isoladas;
+* **Sistemas SaaS** que exigem multi-tenancy simples;
+* **Projetos de aprendizado de arquitetura moderna**;
+* **Startups** que desejam crescer sem complexidade técnica inicial.
 
 ---
 
-## 🔗 11. RECURSOS
+## 🗺️ Próximos Passos
 
-* 📘 **Documentação:** `/DOC/cellular_architecture.md`
-* 🧩 **Templates:** `/cell-template/`
-* 🧠 **AI Reusables:** [AI Reusables Framework](../README.md)
-* ⚙️ **Infraestrutura:** Terraform + Docker
-
----
-
-## 🧭 12. LICENÇA E AUTORIA
-
-MIT License © 2025
-Desenvolvido por **Alexandre Passarelli**
-🌐 Projeto: **AI Reusables Framework — Galáxias de Arquiteturas Educacionais**
-
-```
+1. **Implementar o template base (`cell-template`)**
+2. **Configurar o roteador central (`cell-router`)**
+3. **Criar células funcionais: `users`, `appointments`, `reports`**
+4. **Integrar Prometheus + Grafana para métricas**
+5. **Publicar exemplo educacional: Sistema Escolar Modular**
 
 ---
 
-Quer que eu gere também o **banner visual (ASCII + emoji + cores Markdown)** para o topo desse README — tipo uma *assinatura visual de arquitetura*, no estilo:
+## 🤝 Licença e Contribuição
+
+Este projeto faz parte do **repositório “AI Reusables”**, uma iniciativa open source para ensino e aplicação de arquiteturas modernas de software.
+Sinta-se à vontade para **contribuir com exemplos, melhorias e adaptações para diferentes linguagens ou frameworks**.
+
+📄 **Licença:** MIT
+🌍 **Compatível com ambientes educacionais e comerciais.**
+
+---
+
+## 🧭 Créditos
+
+**Autor:** Alexandre Passarelli
+**Projeto:** AI Reusables — Framework de Arquiteturas Aplicadas
+**Versão:** Cellular Architecture v1.0
+**Objetivo:** Democratizar a compreensão e o uso de arquiteturas distribuídas em ambientes educacionais e pequenos negócios.
 
 ```
 
-╔════════════════════════════════════╗
-║   🧬 CELLULAR ARCHITECTURE v1.0    ║
-║   Sistemas Vivos e Escaláveis      ║
-╚════════════════════════════════════╝
-
-```
-
-Assim ele ganha identidade visual própria dentro do repositório principal (como se fosse um “selo biológico”). Deseja isso na versão final?
-```
+---
