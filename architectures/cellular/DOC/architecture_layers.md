@@ -156,8 +156,3 @@ Parte integrante do projeto **AI Reusables Framework — Galáxias de Arquitetur
 
 ```
 
----
-
-Deseja que eu gere agora o arquivo complementar  
-📘 **`DOC/architecture_layers.mmd`** (versão puramente visual em *Mermaid* do mesmo conteúdo, ideal para embedding em documentação interativa ou README)?
-```
